@@ -82,3 +82,30 @@ def test_elo_prediction_with_teams():
     assert prediction["win"] == 2784
     assert prediction["lose"] == 2739
     assert prediction["prediction"] == 2784
+
+def test_calc_mmr():
+    """
+    GIVEN prediction helper
+    CHECK if calc_mmr returns the correct K factor
+    """
+
+    own_elos = [
+        2783, 2761, 2738, 2760, 2783, 2762, 2739
+    ]
+
+    victorys = [
+        0, 0, 1, 1, 0, 0, 0
+    ]
+
+    first_team_elos = [
+        2833, 2773, 2767, 2712, 2760, 2774, 2759
+    ]
+
+    second_team_elos = [
+        2842, 2763, 2758, 2721, 2780, 2769, 2761
+    ]
+
+    mmrs = Helpers.calc_mmr(own_elos, victorys, first_team_elos, second_team_elos)
+
+    assert mmrs["actual"] == 45
+    assert mmrs["averrage"] == 45
